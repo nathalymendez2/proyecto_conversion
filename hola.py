@@ -47,4 +47,49 @@ def tiempo(tipo, entrada, resultado):
         resultadoo = valor/24
         resultado.config(text=f"{valor} horas = {resultado} días")
 
+    def formulario(titulo, opciones, conversion):
+        ventana = tk.Toplevel()
+        ventana.title(titulo)
+        ventana.geometry("400x400")
+
+        tk.Label(ventana, text="Valor a convertir:").pack(pady=5)
+        entrada = tk.Entry(ventana)
+        entrada.pack(pady=5)
+
+        for nombre, tipo in opciones:
+            frame =tk.Frame(ventana)
+            frame.pack(pady=2)
+            boton = tk.Button(frame, text=nombre, command=lambda t=tipo: conversion(t, entrada, resultado))
+            boton.pack()
+
+        resultado = tk.Label(ventana, text="", fg= "pink")
+        resultado.pack(pady=10)
+
+    principal = tk.Tk()
+    principal.title("Menú de Conversiones")
+    principal.geometry("400x400")
+
+    menu = tk.Menu(principal)
+    principal.config(menu=menu)
+
+    menu_conversion = tk.Menu(menu, tearoff=0)
+    menu.add_cascade(label="Conversión", menu=menu_conversion)
+
+    menu_conversion.add_command(label="Longitud", command=lambda: formulario(
+        "Conversión de longitudes",
+        [("Metros a kilometros", "metros_kilometros"), ("Pulgadas a Metros", "pulgadas_metros")],
+        longitudes))
     
+    menu_conversion.add_command(label="Masa", command=lambda: formulario(
+        "Conversión de Masa",
+        [("Kilogramos a gramos", "kilogramo_gramo"), ("Libras a kilogramos", "libra_kilogramo")],
+        masa))
+    
+    menu_conversion.add_command(label="Tiempo", command=lambda: formulario(
+        "Conversión de tiempo",
+        [("Segundos a minutos", "segundo_minuto"), ("Horas a días", "hora_dia")],
+        tiempo))
+    
+    principal.mainloop()
+
+
