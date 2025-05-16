@@ -15,10 +15,10 @@ def longitudes(tipo, entrada, resultado):
     
     if tipo == "metro_kilometro":
         resultadoo = valor /1000
-        resultado.config(text=f"{valor} pulgadas = {resultadoo} km")
+        resultado.config(text=f"{valor} metros = {resultadoo} km")
     
     elif tipo == "pulgada_metro":
-        resultadoo = valor * 0.02
+        resultadoo = valor * 0.0254
         resultado.config(text=f"{valor} pulgadas = {resultadoo} metros")
 
 def masa(tipo, entrada, resultado):
@@ -56,15 +56,15 @@ def formulario(titulo, opciones, conversion):
     entrada = tk.Entry(ventana)
     entrada.pack(pady=5)
 
+    resultado = tk.Label(ventana, text="", fg= "black")
+    resultado.pack(pady=10)
+
     for nombre, tipo in opciones:
         frame =tk.Frame(ventana)
         frame.pack(pady=2)
         boton = tk.Button(frame, text=nombre, command=lambda t=tipo: conversion(t, entrada, resultado))
         boton.pack()
-
-        resultado = tk.Label(ventana, text="", fg= "black")
-        resultado.pack(pady=10)
-
+        
 principal = tk.Tk()
 principal.title("Menú de Conversiones")
 principal.geometry("200x200")
@@ -77,7 +77,7 @@ menu.add_cascade(label="Conversiónes", menu=menu_conversion)
 
 menu_conversion.add_command(label="Longitud", command=lambda: formulario(
     "Conversión de longitudes",
-    [("Metros a kilometros", "metros_kilometro"), ("Pulgadas a Metros", "pulgadas_metros")],
+    [("Metros a kilometros", "metro_kilometro"), ("Pulgadas a Metros", "pulgada_metro")],
     longitudes))
     
 menu_conversion.add_command(label="Masa", command=lambda: formulario(
